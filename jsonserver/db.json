@@ -1,0 +1,54 @@
+{
+  "course": [
+    {
+      "id": 1,
+      "name": "khoa hoc javascript",
+      "description": "khoa hoc ngon ngu de lap trinh frontend"
+    },
+    {
+      "id": 2,
+      "name": "khoa hoc java",
+      "description": "java hay duoc su dung de viet backend"
+    },
+    {
+      "id": 3,
+      "name": "khoa hoc C++",
+      "description": "khoa hoc nay de lap trinh nhung"
+    },
+    {
+      "id": 4,
+      "name": "khoa hoc python",
+      "description": "khoa hoc su dung py de hoc AI,ML"
+    },
+    {
+      "id": 5,
+      "name": "khoa hoc ruby",
+      "description": "chua biet de lam gi"
+    },
+    {
+      "id": 6,
+      "name": "khoa hoc android",
+      "description": "lap trinh di dong voi RN"
+    },
+    {
+      "name": "hoang trung nam",
+      "description": "hahahaha",
+      "id": 7
+    },
+    {
+      "name": "okokokokok",
+      "description": "",
+      "id": 8
+    },
+    {
+      "name": "hoang sang",
+      "description": "hichic",
+      "id": 9
+    },
+    {
+      "name": "hoang thu",
+      "description": "cung lam an duoc",
+      "id": 10
+    }
+  ]
+}

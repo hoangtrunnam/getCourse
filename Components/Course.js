@@ -1,30 +1,58 @@
-import React from 'react'
-import { StyleSheet, Text, View, SafeAreaView, TextInput, TouchableOpacity, FlatList } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { StyleSheet, Text, Alert, View, SafeAreaView, TextInput, TouchableOpacity, FlatList, ActivityIndicator } from 'react-native'
+import axios from 'axios';
 import ChildCourse from './ChildCourse';
 
-const DATA = [
-    {
-        id: 1,
-        title: 'First Item',
-    },
-    {
-        id: 2,
-        title: 'Second Item',
-    },
-    {
-        id: 3,
-        title: 'Third Item',
-    },
-    {
-        id: 4,
-        title: 'Fourth Item',
-    },
-
-
-];
 
 
 const Course = () => {
+    const [isLoading, setLoading] = useState(true);
+    const [data, setData] = useState([]);
+    const [name, setName] = useState('');
+    const [des, setDes] = useState('');
+
+    //10.0.2.2 là ip của máy ảo android
+    const getCourse = async () => {
+        try {
+            let response = await axios.get('http://10.0.2.2:3000/course');
+            let courses = response.data;
+            setData(courses);
+        }
+        catch (err) {
+            console.error(err);
+        }
+        finally {
+            setLoading(false);
+        }
+    }
+
+    const handlerCreate = () => {
+        
+        let data = {
+            name: name,
+            description: des,
+        }
+        postCourses(data);
+    }
+
+    const postCourses = async (data) => {
+        try {
+            let response = await axios.post('http://10.0.2.2:3000/course', data);
+            let courses = response.data;
+            setData(courses);
+        }
+        catch (err) {
+            console.log(err);
+        }
+    }
+
+
+    useEffect(() => {
+        getCourse();
+        
+    },[]);
+
+    
 
     return (
         <SafeAreaView style={styles.container}>
@@ -32,34 +60,42 @@ const Course = () => {
                 <TextInput
                     style={styles.input}
                     placeholder="input name's course!"
+                    onChangeText={name => setName(name)}
+                    value={name}
                 />
                 <TextInput
                     style={[styles.input, styles.inputDes]}
                     placeholder="input description"
+                    onChangeText={des => setDes(des)}
+                    value={des}
+
                 />
                 <View style={{ flexDirection: 'row', justifyContent: "space-around" }}>
                     <TouchableOpacity style={styles.btn} activeOpacity={0.6}>
                         <Text style={styles.textBtn}>Cập Nhật</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={[styles.btn, styles.btnCreate]} activeOpacity={0.6}>
+                    <TouchableOpacity style={[styles.btn, styles.btnCreate]} activeOpacity={0.6} onPress={handlerCreate}>
                         <Text style={styles.textBtn}>Thêm mới</Text>
                     </TouchableOpacity>
 
                 </View>
             </View>
+            {
+                isLoading ? <ActivityIndicator size="large" /> :
+                    <View style={styles.viewFlatLists}>
+                        <FlatList
+                            data={data}
+                            renderItem={({ item }) => {
+                                return <ChildCourse titleToRead={item} />
+                            }}
+                            keyExtractor={item => `${item.id}`}
 
-            <View style={styles.viewFlatLists}>
-                <FlatList
-                    data={DATA}
-                    renderItem={({item})=>{
-                        <ChildCourse titleToRead={item.title}/>
-                    }}
-                    keyExtractor={item=>`${item.id}`}
+                        />
+                    </View>
+            }
 
-                />
-            </View>
-            <ChildCourse titleToRead="hoang nam"/>
+
         </SafeAreaView>
     )
 }
@@ -71,7 +107,6 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         paddingTop: 50,
-        zIndex: 1000
     },
     viewData: {
         width: "80%",
@@ -99,8 +134,10 @@ const styles = StyleSheet.create({
     textBtn: {
         fontSize: 16
     },
-    viewFlatLists:{
-        backgroundColor:"pink"
+    viewFlatLists: {
+        // backgroundColor:"pink",
+        flex: 1,
+        width: "100%",
     },
 
 
