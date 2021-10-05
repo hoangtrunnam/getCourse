@@ -2,53 +2,33 @@
   "course": [
     {
       "id": 1,
-      "name": "khoa hoc javascript",
-      "description": "khoa hoc ngon ngu de lap trinh frontend"
+      "name": "Responsive Với Grid System",
+      "description": "Trong khóa này chúng ta sẽ học về cách xây dựng giao diện web responsive với Grid System, tương tự Bootstrap 4."
     },
     {
       "id": 2,
-      "name": "khoa hoc java",
-      "description": "java hay duoc su dung de viet backend"
+      "name": "HTML, CSS Tips & Tricks",
+      "description": "Tutorials về HTML, CSS, UI, UX sẽ được tổng hợp tại khóa học này, các video có nội dung ngắn gọn, súc tích"
     },
     {
       "id": 3,
-      "name": "khoa hoc C++",
-      "description": "khoa hoc nay de lap trinh nhung"
+      "name": "HTML, CSS từ Zero đến Hero",
+      "description": "Trong khóa này chúng ta sẽ cùng nhau xây dựng giao diện 2 trang web là The Band & Shopee."
     },
     {
       "id": 4,
-      "name": "khoa hoc python",
-      "description": "khoa hoc su dung py de hoc AI,ML"
+      "name": "Javascript Cơ Bản",
+      "description": "Học Javascript cơ bản phù hợp cho người chưa từng học lập trình. Với hơn 100 bài học và có bài tập thực hành sau mỗi bài học."
     },
     {
       "id": 5,
-      "name": "khoa hoc ruby",
-      "description": "chua biet de lam gi"
+      "name": "Node & ExpressJS",
+      "description": "Học Back-end với Node & ExpressJS framework, hiểu các khái niệm khi làm Back-end và xây dựng RESTful API cho trang web."
     },
     {
       "id": 6,
-      "name": "khoa hoc android",
-      "description": "lap trinh di dong voi RN"
-    },
-    {
-      "name": "hoang trung nam",
-      "description": "hahahaha",
-      "id": 7
-    },
-    {
-      "name": "okokokokok",
-      "description": "",
-      "id": 8
-    },
-    {
-      "name": "hoang sang",
-      "description": "hichic",
-      "id": 9
-    },
-    {
-      "name": "hoang thu",
-      "description": "cung lam an duoc",
-      "id": 10
+      "name": "ReactJS",
+      "description": "Khóa học ReactJS từ cơ bản tới nâng cao, kết quả của khóa học này là bạn có thể làm hầu hết các dự án thường gặp với ReactJS"
     }
   ]
 }

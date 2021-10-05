@@ -10,6 +10,7 @@ const Course = () => {
     const [data, setData] = useState([]);
     const [name, setName] = useState('');
     const [des, setDes] = useState('');
+    const [dataPost,setDataPost] = useState([])
 
     //10.0.2.2 là ip của máy ảo android
     const getCourse = async () => {
@@ -25,7 +26,6 @@ const Course = () => {
             setLoading(false);
         }
     }
-
     const handlerCreate = () => {
         
         let data = {
@@ -39,18 +39,21 @@ const Course = () => {
         try {
             let response = await axios.post('http://10.0.2.2:3000/course', data);
             let courses = response.data;
-            setData(courses);
+            setDataPost(courses);
         }
         catch (err) {
             console.log(err);
         }
+        finally {
+            Alert.alert("Thêm mới thành công");
+            setName('');// set lại giá trị thành rỗng ở ô input
+            setDes('');
+        }
     }
-
-
     useEffect(() => {
         getCourse();
         
-    },[]);
+    },[dataPost]);
 
     
 
@@ -70,9 +73,9 @@ const Course = () => {
                     value={des}
 
                 />
-                <View style={{ flexDirection: 'row', justifyContent: "space-around" }}>
+                <View style={{ flexDirection: 'row', justifyContent: "space-around" , paddingBottom:16,paddingTop:6}}>
                     <TouchableOpacity style={styles.btn} activeOpacity={0.6}>
-                        <Text style={styles.textBtn}>Cập Nhật</Text>
+                        <Text style={styles.textBtn}>Cập nhật</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity style={[styles.btn, styles.btnCreate]} activeOpacity={0.6} onPress={handlerCreate}>
@@ -110,21 +113,23 @@ const styles = StyleSheet.create({
     },
     viewData: {
         width: "80%",
-        backgroundColor: "yellow"
+        // backgroundColor: "yellow"
     },
     input: {
         fontSize: 20,
-        backgroundColor: "red",
-        height: 50,
-        borderRadius: 25,
-        paddingHorizontal: 16,
+        // backgroundColor: "red",
+        height: 40,
+        paddingHorizontal: 8,
+        borderBottomWidth:2,
 
     },
     inputDes: {
         marginVertical: 15,
     },
     btn: {
-        backgroundColor: "green",
+        backgroundColor: "#ba5154",
+        // backgroundColor: "#ffffff",
+
         width: "40%",
         height: 30,
         borderRadius: 30,
@@ -132,7 +137,9 @@ const styles = StyleSheet.create({
         justifyContent: "center",
     },
     textBtn: {
-        fontSize: 16
+        fontSize: 20,
+        fontWeight: "bold",
+        color: "#ffffff",
     },
     viewFlatLists: {
         // backgroundColor:"pink",
