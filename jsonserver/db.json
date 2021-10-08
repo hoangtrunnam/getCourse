@@ -9,26 +9,6 @@
       "id": 2,
       "name": "HTML, CSS Tips & Tricks",
       "description": "Tutorials về HTML, CSS, UI, UX sẽ được tổng hợp tại khóa học này, các video có nội dung ngắn gọn, súc tích"
-    },
-    {
-      "id": 3,
-      "name": "HTML, CSS từ Zero đến Hero",
-      "description": "Trong khóa này chúng ta sẽ cùng nhau xây dựng giao diện 2 trang web là The Band & Shopee."
-    },
-    {
-      "id": 4,
-      "name": "Javascript Cơ Bản",
-      "description": "Học Javascript cơ bản phù hợp cho người chưa từng học lập trình. Với hơn 100 bài học và có bài tập thực hành sau mỗi bài học."
-    },
-    {
-      "id": 5,
-      "name": "Node & ExpressJS",
-      "description": "Học Back-end với Node & ExpressJS framework, hiểu các khái niệm khi làm Back-end và xây dựng RESTful API cho trang web."
-    },
-    {
-      "id": 6,
-      "name": "ReactJS",
-      "description": "Khóa học ReactJS từ cơ bản tới nâng cao, kết quả của khóa học này là bạn có thể làm hầu hết các dự án thường gặp với ReactJS"
     }
   ]
 }

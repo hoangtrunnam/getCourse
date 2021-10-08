@@ -4,9 +4,9 @@ import axios from 'axios';
 
 // đây là hàm render ra các khoá học, và nó sẽ thay đổi liên tục tuỳ theo dữ liệu
 const ChildCourse = (props) => {
-    const { titleToRead } = props;
+    const { titleToRead , deleteCourse,updateCourse} = props;
 
-    // async function handlerDelete(titleToRead.id) {
+    // const handlerDelete= async (titleToRead.id) => {
     //     try {
     //         let response = await axios.delete('http://10.0.2.2:3000/course'+"/"+titleToRead.id);
     //         let courses = response.data;
@@ -20,9 +20,7 @@ const ChildCourse = (props) => {
     //     }
     // }
 
-    function handlerDelete() {
-        Alert.alert("xoá thành công")
-    }
+   
 
     return (
         <View style={styles.container}>
@@ -31,10 +29,10 @@ const ChildCourse = (props) => {
                 <Text style={styles.textTitle}>Mô tả khoá học: {titleToRead.description} </Text>
             </View>
             <View style={{ flexDirection: 'row', justifyContent: "space-around" }}>
-                <TouchableOpacity style={styles.btn} activeOpacity={0.6} onPress={handlerDelete}>
+                <TouchableOpacity style={styles.btn} activeOpacity={0.6} onPress={()=>deleteCourse(titleToRead.id)}>
                     <Text style={styles.textBtn}>XOÁ</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.btn} activeOpacity={0.6}>
+                <TouchableOpacity style={styles.btn} activeOpacity={0.6} onPress={()=>updateCourse(titleToRead.id)}>
                     <Text style={styles.textBtn}>SỬA</Text>
                 </TouchableOpacity>
             </View>

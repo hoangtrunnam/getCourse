@@ -1,18 +1,20 @@
+import 'react-native-gesture-handler';
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View, FlatList, SafeAreaView } from 'react-native';
-import Course from './Components/Course';
 import ChildCourse from './Components/ChildCourse'
-
+import { NavigationContainer } from '@react-navigation/native';
+import MainStackNavigator from './navigation/MainStackNavigator'
 export default function App() {
 
   return (
-    <SafeAreaView style={styles.container}>
+    <NavigationContainer>
+      <SafeAreaView style={styles.container}>
+      <MainStackNavigator/>
 
-        <Course />
         <StatusBar style="auto" />
-
-    </SafeAreaView>
+      </SafeAreaView>
+    </NavigationContainer>
   );
 }
 

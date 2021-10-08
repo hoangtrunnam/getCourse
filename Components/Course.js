@@ -5,17 +5,20 @@ import ChildCourse from './ChildCourse';
 
 
 
-const Course = () => {
+const Course = ({ navigation }) => {
     const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState([]);
     const [name, setName] = useState('');
     const [des, setDes] = useState('');
-    const [dataPost,setDataPost] = useState([])
-
+    const [dataPost, setDataPost] = useState([]);
+    const [courseDelete, setCourseDelete] = useState([]);
+    const [courseUpdate, setCourseUpdate] = useState([]);
+    const baseUrl = "http://10.0.2.2:3000/course";
     //10.0.2.2 là ip của máy ảo android
+    // hàm lấy tất cả các khoá học về
     const getCourse = async () => {
         try {
-            let response = await axios.get('http://10.0.2.2:3000/course');
+            let response = await axios.get(baseUrl);
             let courses = response.data;
             setData(courses);
         }
@@ -26,8 +29,8 @@ const Course = () => {
             setLoading(false);
         }
     }
+    // hàm post khoá học
     const handlerCreate = () => {
-        
         let data = {
             name: name,
             description: des,
@@ -37,7 +40,7 @@ const Course = () => {
 
     const postCourses = async (data) => {
         try {
-            let response = await axios.post('http://10.0.2.2:3000/course', data);
+            let response = await axios.post(baseUrl, data);
             let courses = response.data;
             setDataPost(courses);
         }
@@ -50,31 +53,99 @@ const Course = () => {
             setDes('');
         }
     }
+
+
+    // hàm xoá khoá học theo id: 
+
+    const deleteCourseById = (id) => {
+        data.forEach(async (currCourse) => {// forEach cũng là 1 hàm nên nó cũng cần asnyc
+            if (currCourse.id === id) {
+                try {
+                    let response = await axios.delete(`${baseUrl}/${id}`);
+                    let course = response.data;
+                    setCourseDelete(course);
+                }
+                catch (err) {
+                    console.log(err);
+                }
+                finally {
+                    Alert.alert('xoá thành công khoá học ');
+                }
+            }
+        })
+    }
+
+    // lấy name và des theo id và truyền nó vào trong 2 ô input
+    const handlerFixCourseById = (id) => {
+        data.forEach((currCourse) => {
+            if (currCourse.id === id) {
+                setDes(currCourse.description);
+                setName(currCourse.name);
+            }
+            return id;
+        })
+
+    }
+
+    // console.log(idToUpdateCourse);
+    // hàm update dữ liệu theo id:
+    const handlerUpdateCourseById = (handlerFixCourseById) => {
+        let dataToUpdate = {
+            name: name,
+            description: des,
+        }
+        // console.log(dataToUpdate)
+        data.forEach(async (currCourse) => {
+            if (currCourse.handlerFixCourseById === handlerFixCourseById) {
+                try {
+                    let response = await axios.put(`${baseUrl}/${handlerFixCourseById}`, dataToUpdate)
+                    let course = response.data;
+                    setCourseUpdate(course);
+                }
+                catch (err) {
+                    console.error(err);
+                }
+                finally {
+                    Alert.alert("update thanh cong");
+                    setName('');// set lại giá trị thành rỗng ở ô input
+                    setDes('');
+                }
+            }
+        })
+    }
+
+
     useEffect(() => {
         getCourse();
-        
-    },[dataPost]);
 
-    
+    }, [dataPost, courseDelete, courseUpdate]);
+
+
 
     return (
         <SafeAreaView style={styles.container}>
+            <TouchableOpacity style={styles.btn} activeOpacity={0.6}
+                onPress={() => {
+                    navigation.navigate("Details")
+                }}>
+                <Text style={{ fontSize: 20, color: "#ffffff" }}>go to details</Text>
+            </TouchableOpacity>
             <View style={styles.viewData}>
                 <TextInput
                     style={styles.input}
-                    placeholder="input name's course!"
+                    placeholder="Name's course!"
                     onChangeText={name => setName(name)}
                     value={name}
                 />
                 <TextInput
                     style={[styles.input, styles.inputDes]}
-                    placeholder="input description"
+                    placeholder="Description"
                     onChangeText={des => setDes(des)}
                     value={des}
 
                 />
-                <View style={{ flexDirection: 'row', justifyContent: "space-around" , paddingBottom:16,paddingTop:6}}>
-                    <TouchableOpacity style={styles.btn} activeOpacity={0.6}>
+                <View style={{ flexDirection: 'row', justifyContent: "space-around", paddingBottom: 16, paddingTop: 6 }}>
+                    <TouchableOpacity style={styles.btn} activeOpacity={0.6} onPress={handlerUpdateCourseById}>
                         <Text style={styles.textBtn}>Cập nhật</Text>
                     </TouchableOpacity>
 
@@ -90,7 +161,11 @@ const Course = () => {
                         <FlatList
                             data={data}
                             renderItem={({ item }) => {
-                                return <ChildCourse titleToRead={item} />
+                                return <ChildCourse
+                                    titleToRead={item}
+                                    deleteCourse={deleteCourseById}
+                                    updateCourse={handlerFixCourseById}
+                                />
                             }}
                             keyExtractor={item => `${item.id}`}
 
@@ -120,7 +195,7 @@ const styles = StyleSheet.create({
         // backgroundColor: "red",
         height: 40,
         paddingHorizontal: 8,
-        borderBottomWidth:2,
+        borderBottomWidth: 2,
 
     },
     inputDes: {
