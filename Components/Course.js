@@ -13,6 +13,7 @@ const Course = ({ navigation }) => {
     const [dataPost, setDataPost] = useState([]);
     const [courseDelete, setCourseDelete] = useState([]);
     const [courseUpdate, setCourseUpdate] = useState([]);
+    const [id,setId] = useState(0);
     const baseUrl = "http://10.0.2.2:3000/course";
     //10.0.2.2 là ip của máy ảo android
     // hàm lấy tất cả các khoá học về
@@ -82,28 +83,30 @@ const Course = ({ navigation }) => {
                 setDes(currCourse.description);
                 setName(currCourse.name);
             }
-            return id;
         })
-
+        setId(id)
     }
-
-    // console.log(idToUpdateCourse);
     // hàm update dữ liệu theo id:
-    const handlerUpdateCourseById = (handlerFixCourseById) => {
+
+    const handlerUpdateCourseById = () => {
         let dataToUpdate = {
             name: name,
-            description: des,
+            description: des
         }
         // console.log(dataToUpdate)
         data.forEach(async (currCourse) => {
-            if (currCourse.handlerFixCourseById === handlerFixCourseById) {
+        // console.log(id);
+
+            if (currCourse.id === id) {
+
                 try {
-                    let response = await axios.put(`${baseUrl}/${handlerFixCourseById}`, dataToUpdate)
+                    let response = await axios.put(`${baseUrl}/${id}`, dataToUpdate)
                     let course = response.data;
                     setCourseUpdate(course);
+                    // console.log(course);
                 }
                 catch (err) {
-                    console.error(err);
+                    console.log("loi roi");
                 }
                 finally {
                     Alert.alert("update thanh cong");

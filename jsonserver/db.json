@@ -1,14 +1,9 @@
 {
   "course": [
     {
-      "id": 1,
-      "name": "Responsive Với Grid System",
-      "description": "Trong khóa này chúng ta sẽ học về cách xây dựng giao diện web responsive với Grid System, tương tự Bootstrap 4."
-    },
-    {
-      "id": 2,
-      "name": "HTML, CSS Tips & Tricks",
-      "description": "Tutorials về HTML, CSS, UI, UX sẽ được tổng hợp tại khóa học này, các video có nội dung ngắn gọn, súc tích"
+      "name": "hoang nam",
+      "description": "",
+      "id": 1
     }
   ]
 }
