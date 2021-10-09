@@ -6,22 +6,6 @@ import axios from 'axios';
 const ChildCourse = (props) => {
     const { titleToRead , deleteCourse,updateCourse} = props;
 
-    // const handlerDelete= async (titleToRead.id) => {
-    //     try {
-    //         let response = await axios.delete('http://10.0.2.2:3000/course'+"/"+titleToRead.id);
-    //         let courses = response.data;
-    //         // setData(courses);
-    //     }
-    //     catch (err) {
-    //         console.log("đã có lỗi xảy ra");
-    //     }
-    //     finally{
-    //         Alert.alert("xoá thành công")
-    //     }
-    // }
-
-   
-
     return (
         <View style={styles.container}>
             <View >
