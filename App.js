@@ -5,15 +5,25 @@ import { StyleSheet, Text, View, FlatList, SafeAreaView } from 'react-native';
 import ChildCourse from './Components/ChildCourse'
 import { NavigationContainer } from '@react-navigation/native';
 import MainStackNavigator from './navigation/MainStackNavigator'
+import BottomTab from './navigation/BottomTab';
+import { Provider } from 'react-redux';
+import store from './store';
+
 export default function App() {
 
   return (
     <NavigationContainer>
+    <Provider store={store}>
+
       <SafeAreaView style={styles.container}>
-      <MainStackNavigator/>
+
+      {/* <MainStackNavigator/> */}
+      <BottomTab/>
 
         <StatusBar style="auto" />
       </SafeAreaView>
+    </Provider>
+
     </NavigationContainer>
   );
 }

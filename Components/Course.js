@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, Alert, View, SafeAreaView, TextInput, TouchableOpacity, FlatList, ActivityIndicator } from 'react-native'
 import axios from 'axios';
 import ChildCourse from './ChildCourse';
+import {  useDispatch, useSelector } from 'react-redux';
+import { deleteCourse } from '../action/DeleteCourse';
 
 
 
@@ -10,12 +12,14 @@ const Course = ({ navigation }) => {
     const [data, setData] = useState([]);
     const [name, setName] = useState('');
     const [des, setDes] = useState('');
+
     const [dataPost, setDataPost] = useState([]);
     const [courseDelete, setCourseDelete] = useState([]);
     const [courseUpdate, setCourseUpdate] = useState([]);
-    const [id,setId] = useState(0);
+    const [id, setId] = useState(0);
     const baseUrl = "http://10.0.2.2:3000/course";
     //10.0.2.2 là ip của máy ảo android
+
     // hàm lấy tất cả các khoá học về
     const getCourse = async () => {
         try {
@@ -57,24 +61,47 @@ const Course = ({ navigation }) => {
 
 
     // hàm xoá khoá học theo id: 
-
-    const deleteCourseById = (id) => {
-        data.forEach(async (currCourse) => {// forEach cũng là 1 hàm nên nó cũng cần asnyc
-            if (currCourse.id === id) {
-                try {
-                    let response = await axios.delete(`${baseUrl}/${id}`);
-                    let course = response.data;
-                    setCourseDelete(course);
-                }
-                catch (err) {
-                    console.log(err);
-                }
-                finally {
-                    Alert.alert('xoá thành công khoá học ');
+    const dispatch = useDispatch();
+    
+    const deleteCourseById = async (id) => {
+        // clone obj sử dụng state theo id trước khi xoá
+        let temp;
+        data.forEach(course => {
+            
+            if (course.id === id) {
+                setNameToPassParams(course.name);
+                setDesToPassParams(course.description);
+                temp ={
+                    name: course.name,
+                    des: course.description,
                 }
             }
         })
+
+        const ObjDataPassParams = temp;
+        
+
+        const action = deleteCourse(ObjDataPassParams);
+        dispatch(action);
+        
+
+        // gửi method delete
+        try {
+            let response = await axios.delete(`${baseUrl}/${id}`);
+            let course = response.data;
+            setCourseDelete(course);
+
+        }
+        catch (err) {
+            console.log(err);
+        }
+        finally {
+            Alert.alert('xoá thành công khoá học ');
+        }
     }
+    
+
+
 
     // lấy name và des theo id và truyền nó vào trong 2 ô input
     const handlerFixCourseById = (id) => {
@@ -88,33 +115,30 @@ const Course = ({ navigation }) => {
     }
     // hàm update dữ liệu theo id:
 
-    const handlerUpdateCourseById = () => {
+    const handlerUpdateCourseById = async () => {
         let dataToUpdate = {
             name: name,
             description: des
         }
-        // console.log(dataToUpdate)
-        data.forEach(async (currCourse) => {
-        // console.log(id);
+        // data.forEach(async (currCourse) => {
 
-            if (currCourse.id === id) {
+        // if (currCourse.id === id) {
 
-                try {
-                    let response = await axios.put(`${baseUrl}/${id}`, dataToUpdate)
-                    let course = response.data;
-                    setCourseUpdate(course);
-                    // console.log(course);
-                }
-                catch (err) {
-                    console.log("loi roi");
-                }
-                finally {
-                    Alert.alert("update thanh cong");
-                    setName('');// set lại giá trị thành rỗng ở ô input
-                    setDes('');
-                }
-            }
-        })
+        try {
+            let response = await axios.put(`${baseUrl}/${id}`, dataToUpdate)
+            let course = response.data;
+            setCourseUpdate(course);
+        }
+        catch (err) {
+            console.log("loi roi");
+        }
+        finally {
+            Alert.alert("update thanh cong");
+            setName('');// set lại giá trị thành rỗng ở ô input
+            setDes('');
+        }
+        // }
+        // })
     }
 
 
@@ -122,21 +146,26 @@ const Course = ({ navigation }) => {
         getCourse();
 
     }, [dataPost, courseDelete, courseUpdate]);
-
+ /*   
+    // redux xoa
+    
+    
+    // ket thuc redux xoa
+*/
 
 
     return (
         <SafeAreaView style={styles.container}>
-            <TouchableOpacity style={styles.btn} activeOpacity={0.6}
+            {/* <TouchableOpacity style={styles.btn} activeOpacity={0.6}
                 onPress={() => {
-                    navigation.navigate("Details")
+                    navigation.navigate("Details", { ObjDataPassParams })
                 }}>
-                <Text style={{ fontSize: 20, color: "#ffffff" }}>go to details</Text>
-            </TouchableOpacity>
+                <Text style={{ fontSize: 16, color: "#ffffff" }}>go to course deleted</Text>
+            </TouchableOpacity> */}
             <View style={styles.viewData}>
                 <TextInput
                     style={styles.input}
-                    placeholder="Name's course!"
+                    placeholder="Course !"
                     onChangeText={name => setName(name)}
                     value={name}
                 />
