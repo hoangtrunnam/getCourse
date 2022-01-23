@@ -100,7 +100,7 @@ const Course = ({ navigation }) => {
         }
     }
     
-
+// hahaha
 
 
     // lấy name và des theo id và truyền nó vào trong 2 ô input
